@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {RNCamera} from 'react-native-camera';
-class QRScanComponent extends Component {
+class QRScanScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      barcodes: [],
+      qrCodes: [],
       qrFound: false,
       qrCodeValue: '',
     };
@@ -17,8 +17,8 @@ class QRScanComponent extends Component {
   };
 
   onBarCodeRead(scanResult) {
-    Vibration.vibrate(300);
-    Vibration.cancel();
+    // Vibration.vibrate(300);
+    // Vibration.cancel();
     this.setState({qrFound: true});
     if (scanResult.data != null) {
       if (!this.state.qrCodes.includes(scanResult.data)) {
@@ -33,21 +33,29 @@ class QRScanComponent extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <RNCamera
-          ref={(ref) => {
-            this.camera = ref;
-          }}
-          style={styles.camera}
-          defaultTouchToFocus
-          flashMode={RNCamera.Constants.FlashMode.auto}
-          mirrorImage={false}
-          onBarCodeRead={this.onBarCodeRead.bind(this)}
-          onFocusChanged={() => {}}
-          onZoomChanged={() => {}}></RNCamera>
-      </View>
-    );
+    if (!this.state.qrFound) {
+      return (
+        <View style={styles.container}>
+          <RNCamera
+            ref={(ref) => {
+              this.camera = ref;
+            }}
+            style={styles.camera}
+            defaultTouchToFocus
+            flashMode={RNCamera.Constants.FlashMode.auto}
+            mirrorImage={false}
+            onBarCodeRead={this.onBarCodeRead.bind(this)}
+            onFocusChanged={() => {}}
+            onZoomChanged={() => {}}></RNCamera>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text>{this.state.qrCodeValue}</Text>
+        </View>
+      );
+    }
   }
 }
 
@@ -70,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QRScanComponent;
+export default QRScanScreen;

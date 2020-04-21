@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {Component} from 'react';
 import QRDisplayComponent from '../components/QRDipslayComponent';
-import QRScanComponent from '../components/QRScanComponent';
+import QRScanScreen from './QRScanScreen';
 import PaymentSetupComponent from '../components/PaymentSetupComponent';
 
 class PaymentScreen extends Component {
@@ -10,7 +10,7 @@ class PaymentScreen extends Component {
     super(props);
 
     this.state = {
-      creditDone: false,
+      creditDone: true,
       payMoney: false,
       recMoney: false,
       recipientPhoneNumber: '',
@@ -45,7 +45,7 @@ class PaymentScreen extends Component {
         );
       }
       if (this.state.payMoney === true) {
-        return <QRScanComponent recipient={this.recipientReturned} />;
+        return <QRScanScreen recipient={this.recipientReturned} />;
       } else if (this.state.recMoney === true) {
         return <QRDisplayComponent />;
       }
