@@ -8,7 +8,10 @@ import QRScanScreen from '../screens/QRScanScreen';
 
 const PaymentStack = createStackNavigator({
   Payment: {
-    screen: PaymentScreen
+    screen: PaymentScreen,
+    navigationOptions: {
+      header: null
+    }
   },
   Camera: {
     screen: QRScanScreen
