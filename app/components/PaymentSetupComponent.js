@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-
+import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Header } from './Header';
 class PaymentSetupComponent extends Component {
   constructor(props) {
     super(props);
@@ -19,10 +19,11 @@ class PaymentSetupComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.topText}>
+        <Header title={'One more step!'} description={'Complete your profile'} />
+        {/* <View style={styles.topText}>
           <Text style={styles.topText1}>One more step!</Text>
           <Text style={styles.topText2}>Complete your profile</Text>
-        </View>
+        </View> */}
 
         <View style={styles.bankCard}>
           <View style={styles.card}>
@@ -62,8 +63,8 @@ const styles = StyleSheet.create({
   doneButton: {
     flex: 2,
   },
-  topText1: {color: 'white', fontSize: 36, fontWeight: 'bold'},
-  topText2: {color: 'white', fontSize: 14, opacity: 0.7, marginTop: 5},
+  topText1: { color: 'white', fontSize: 36, fontWeight: 'bold' },
+  topText2: { color: 'white', fontSize: 14, opacity: 0.7, marginTop: 5 },
   card: {
     flex: 1,
     width: '95%',
