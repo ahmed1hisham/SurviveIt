@@ -4,15 +4,15 @@ import { View, Text } from 'react-native';
 
 
 
-class NotificationsScreen extends React.Component {
+class InteractionScreen extends React.Component {
   render() {
     return (
       <View>
-        <Text>Notifications</Text>
+        <Text>ssavasg></Text>
       </View>
     )
   }
 }
 
 
-export default (NotificationsScreen);
+export default (InteractionScreen);

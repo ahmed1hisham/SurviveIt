@@ -1,11 +1,11 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {Component} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
 import QRDisplayComponent from '../components/QRDipslayComponent';
 import QRScanScreen from './QRScanScreen';
 import PaymentSetupComponent from '../components/PaymentSetupComponent';
 
 class PaymentScreen extends Component {
-  state = {creditDone: true, payMoney: false, recMoney: false};
+  state = { creditDone: true, payMoney: false, recMoney: false };
   constructor(props) {
     super(props);
 
@@ -18,15 +18,16 @@ class PaymentScreen extends Component {
   }
 
   goToQRScan = () => {
-    this.setState({payMoney: true, recMoney: false});
+    this.setState({ payMoney: true, recMoney: false });
+    // this.props.navigation.navigate('Camera');
   };
 
   goToQRDisplay = () => {
-    this.setState({recMoney: true, payMoney: false});
+    this.setState({ recMoney: true, payMoney: false });
   };
 
   recipientReturned = (phoneNumber) => {
-    this.setState({recipientPhoneNumber: phoneNumber});
+    this.setState({ recipientPhoneNumber: phoneNumber });
     console.log(this.state.recipientPhoneNumber);
   };
 
@@ -35,10 +36,10 @@ class PaymentScreen extends Component {
       if (this.state.payMoney !== true && this.state.recMoney !== true) {
         return (
           <View style={styles.container}>
-            <TouchableOpacity style={{margin: 20}} onPress={this.goToQRDisplay}>
+            <TouchableOpacity style={{ margin: 20 }} onPress={this.goToQRDisplay}>
               <Text style={styles.buttons}>Recieve Money</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{margin: 20}} onPress={this.goToQRScan}>
+            <TouchableOpacity style={{ margin: 20 }} onPress={this.goToQRScan}>
               <Text style={styles.buttons}>Pay Money</Text>
             </TouchableOpacity>
           </View>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
   },
-  buttons: {textAlign: 'center', fontWeight: 'bold', fontSize: 32},
+  buttons: { textAlign: 'center', fontWeight: 'bold', fontSize: 32 },
 });
 
-export default PaymentScreen;
+export default (PaymentScreen);
