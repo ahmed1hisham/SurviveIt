@@ -1,16 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { Component } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {Component} from 'react';
 import QRDisplayComponent from '../components/QRDipslayComponent';
 import QRScanScreen from './QRScanScreen';
 import PaymentSetupComponent from '../components/PaymentSetupComponent';
+import {Header} from '../components/Header';
 
 class PaymentScreen extends Component {
-  state = { creditDone: true, payMoney: false, recMoney: false };
   constructor(props) {
     super(props);
 
     this.state = {
-      creditDone: true,
+      creditDone: false,
       payMoney: false,
       recMoney: false,
       recipientPhoneNumber: '',
@@ -18,30 +18,40 @@ class PaymentScreen extends Component {
   }
 
   goToQRScan = () => {
-    this.setState({ payMoney: true, recMoney: false });
+    this.setState({payMoney: true, recMoney: false});
     // this.props.navigation.navigate('Camera');
   };
 
   goToQRDisplay = () => {
-    this.setState({ recMoney: true, payMoney: false });
+    this.setState({recMoney: true, payMoney: false});
   };
 
   recipientReturned = (phoneNumber) => {
-    this.setState({ recipientPhoneNumber: phoneNumber });
+    this.setState({recipientPhoneNumber: phoneNumber});
     console.log(this.state.recipientPhoneNumber);
   };
 
   render() {
-    if (this.state.creditDone) {
+    if (this.state.creditDone === true) {
       if (this.state.payMoney !== true && this.state.recMoney !== true) {
         return (
           <View style={styles.container}>
-            <TouchableOpacity style={{ margin: 20 }} onPress={this.goToQRDisplay}>
+            <Header
+              title={'One more step!'}
+              description={'Complete your profile'}
+            />
+            {/* <TouchableOpacity style={{margin: 20}} onPress={this.goToQRDisplay}>
               <Text style={styles.buttons}>Recieve Money</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 20 }} onPress={this.goToQRScan}>
-              <Text style={styles.buttons}>Pay Money</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <View style={{flex: 1}}>
+              <View style={styles.card}>
+                <Text style={styles.buttons}>Recieve Money</Text>
+                <QRDisplayComponent />
+              </View>
+              <View style={styles.card}>
+                <Text style={styles.buttons}>Pay Money</Text>
+              </View>
+            </View>
           </View>
         );
       }
@@ -61,9 +71,16 @@ const styles = StyleSheet.create({
     flex: 0,
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
+    backgroundColor: '#f1f1f3',
   },
-  buttons: { textAlign: 'center', fontWeight: 'bold', fontSize: 32 },
+  buttons: {textAlign: 'center', fontWeight: 'bold', fontSize: 32},
+  card: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    margin: 15,
+    marginHorizontal: 20,
+  },
 });
 
-export default (PaymentScreen);
+export default PaymentScreen;
