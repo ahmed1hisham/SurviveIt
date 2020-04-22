@@ -3,7 +3,7 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import PaymentScreen from '../screens/PaymentScreen';
 import InteractionScreen from '../screens/InteractionScreen';
-import NotificationsScreen from '../screens/NotificationsScreen';
+import NotifsScreen from '../screens/NotifsScreen';
 import QRScanScreen from '../screens/QRScanScreen';
 
 const PaymentStack = createStackNavigator({
@@ -29,7 +29,7 @@ const BottomNavigator = createBottomTabNavigator({
     screen: InteractionScreen,
   },
   Notifications: {
-    screen: NotificationsScreen,
+    screen: NotifsScreen,
   },
 });
 
