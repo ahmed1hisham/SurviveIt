@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
-
-export const Header = ({ title, description }) => {
+export const Header = ({title, description}) => {
   return (
     <View style={styles.topText}>
       <Text style={styles.topText1}>{title}</Text>
       <Text style={styles.topText2}>{description}</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   topText: {
@@ -19,9 +18,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingBottom: 20,
     paddingHorizontal: 55,
-    height: 150
+    height: 150,
   },
-  topText1: { color: 'white', fontSize: 36, fontWeight: 'bold' },
-  topText2: { color: 'white', fontSize: 14, opacity: 0.7, marginTop: 5 },
-
+  topText1: {color: 'white', fontSize: 36, fontWeight: 'bold'},
+  topText2: {color: 'white', fontSize: 14, opacity: 0.7, marginTop: 5},
 });

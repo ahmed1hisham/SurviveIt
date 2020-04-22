@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import PaymentScreen from '../screens/PaymentScreen';
 import InteractionScreen from '../screens/InteractionScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
@@ -10,25 +10,27 @@ const PaymentStack = createStackNavigator({
   Payment: {
     screen: PaymentScreen,
     navigationOptions: {
-      header: null
-    }
+      header: null,
+    },
   },
   Camera: {
-    screen: QRScanScreen
-  }
-})
-
+    screen: QRScanScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
 
 const BottomNavigator = createBottomTabNavigator({
   Payment: {
-    screen: PaymentStack
+    screen: PaymentStack,
   },
   Interaction: {
-    screen: InteractionScreen
+    screen: InteractionScreen,
   },
   Notifications: {
-    screen: NotificationsScreen
-  }
-})
+    screen: NotificationsScreen,
+  },
+});
 
 export default AppNav = createAppContainer(BottomNavigator);

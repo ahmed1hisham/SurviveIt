@@ -17,13 +17,11 @@ class QRDisplayComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.qrCode}>
-          <QRCode
-            value={this.state.currentUser.phoneNumber}
-            backgroundColor="transparent"
-            size={300}
-          />
-        </View>
+        <QRCode
+          value={this.state.currentUser.phoneNumber}
+          backgroundColor="transparent"
+          size={150}
+        />
       </View>
     );
   }
@@ -31,16 +29,10 @@ class QRDisplayComponent extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
-    width: '100%',
-    height: '100%',
+    flex: 1,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  qrCode: {
-    marginTop: 15,
   },
 });
 
