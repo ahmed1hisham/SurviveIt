@@ -7,31 +7,54 @@ import { AuthHeader } from '../components/AuthHeader';
 
 
 class NotificationsScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      number: '',
+      nationalID: '',
+      password: ''
+    }
+  }
   render() {
     return (
-      <View>
-        <AuthHeader title={`Together, we can  ${'\n'} survive it`} />
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          <AuthHeader title={`Together, we can  ${'\n'} survive it`} />
+        </View>
         <View style={styles.inputDataView}>
           <Text style={styles.titleStyle}>New Account</Text>
           <TextInput
             label="Full Name"
             iconName="user"
-            onChangeTextFunc={(text) => console.log(text)}
+            onChangeTextFunc={(text) => {
+              console.log(text)
+              this.setState({ name: text })
+            }}
           />
           <TextInput
             label="National ID"
             iconName="user"
-            onChangeTextFunc={(text) => console.log(text)}
+            onChangeTextFunc={(text) => {
+              console.log(text)
+              this.setState({ nationalID: text })
+            }}
           />
           <TextInput
             label="Mobile Number"
             iconName="mobile"
-            onChangeTextFunc={(text) => console.log(text)}
+            onChangeTextFunc={(text) => {
+              console.log(text)
+              this.setState({ number: text })
+            }}
           />
           <TextInput
             label="Password"
             iconName="lock"
-            onChangeTextFunc={(text) => console.log(text)}
+            onChangeTextFunc={(text) => {
+              console.log(text)
+              this.setState({ password: text })
+            }}
           />
 
 
@@ -52,7 +75,7 @@ class NotificationsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   inputDataView: {
-    borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: 'white', padding: 30, marginTop: -30
+    borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: 'white', padding: 30, marginTop: -30, flex: 2
   },
   titleStyle: {
     fontWeight: 'bold',
