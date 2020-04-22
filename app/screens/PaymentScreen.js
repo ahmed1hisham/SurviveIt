@@ -40,10 +40,17 @@ class PaymentScreen extends Component {
       if (this.state.payMoney !== true && this.state.recMoney !== true) {
         return (
           <View style={styles.container}>
-            <Header
-              title={'One more step!'}
-              description={'Complete your profile'}
-            />
+            {this.state.creditDone ? (
+              <Header
+                title={'Services'}
+                description={'Pay or receive money with a click'}
+              />
+            ) : (
+              <Header
+                title={'One more step!'}
+                description={'Complete your profile'}
+              />
+            )}
             {/* <TouchableOpacity style={{margin: 20}} onPress={this.goToQRDisplay}>
               <Text style={styles.buttons}>Recieve Money</Text>
             </TouchableOpacity> */}
