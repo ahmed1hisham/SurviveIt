@@ -21,6 +21,7 @@ export const TextInput = ({ password, placeholder, iconName, value, onChangeText
       value={value}
       label={label}
       inputStyle={{ color: 'black', marginLeft: 10 }}
+      containerStyle={{ marginBottom: 20, paddingHorizontal: -5 }}
       inputContainerStyle={{ borderBottomColor: '#fdc82b' }}
       labelStyle={styles.labelStyle}
       onChangeText={(text) => onChangeTextFunc(text)}
