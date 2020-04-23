@@ -4,12 +4,14 @@ import QRDisplayComponent from '../components/QRDipslayComponent';
 import PaymentSetupComponent from '../components/PaymentSetupComponent';
 import {Header} from '../components/Header';
 import {Input, Button} from 'react-native-elements';
+import QRScanScreen from './QRScanScreen';
 
 class PaymentScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      scanning: false,
       creditDone: false,
       payMoney: false,
       recMoney: false,
@@ -17,13 +19,18 @@ class PaymentScreen extends Component {
       paymentAmount: '',
     };
   }
-  componentDidMount() {
-    if (this.props.navigation === true) {
-      console.log('HEEEEYY');
-      this.props.navigation.navigate('Interaction');
-    }
-  }
-
+  // componentDidChange() {
+  //   if (this.props.navigation.state.params) {
+  //     this.setState({scanned: this.props.navigation.state.params.reScanned});
+  //     if (this.state.scanned) {
+  //       this.setState({scanned: false});
+  //       Alert.alert('Done');
+  //     }
+  //   }
+  // }
+  // componentDidChange() {
+  //   //console.log(this.props.params);
+  // }
   goToQRScan = () => {
     this.props.navigation.navigate('Camera');
   };
@@ -41,9 +48,34 @@ class PaymentScreen extends Component {
     console.log(this.state.recipientPhoneNumber);
   };
 
+  scanCode = () => {
+    this.setState({scanning: true});
+  };
+
+  doneScanning = (phoneNumber) => {
+    this.setState({scanning: false});
+    Alert.alert(
+      'Confirmation',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            Alert.alert('Success', 'Money sent successfully');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   render() {
     if (this.state.creditDone === true) {
-      if (this.state.payMoney !== true && this.state.recMoney !== true) {
+      if (!this.state.scanning) {
         return (
           <View style={styles.container}>
             {this.state.creditDone ? (
@@ -85,13 +117,16 @@ class PaymentScreen extends Component {
                     title="Next"
                     titleStyle={styles.titleStyle}
                     buttonStyle={styles.buttonStyle}
-                    onPress={() => this.goToQRScan()}
+                    onPress={() => this.scanCode()}
                   />
                 </View>
               </View>
             </View>
           </View>
         );
+      } else {
+        console.log('Henaaak');
+        return <QRScanScreen done={this.doneScanning} />;
       }
     } else {
       return <PaymentSetupComponent done={this.doneWithSetup} />;

@@ -28,37 +28,30 @@ class QRScanScreen extends Component {
         });
       }
     }
-    this.props.navigation.navigate('Payment', {
-      phoneNumber: scanResult.data,
-      justScanned: true,
-    });
+    this.props.done(scanResult.data);
+    // this.props.navigation.navigate('Payment', {
+    //   phoneNumber: scanResult.data,
+    //   reScanned: true,
+    // });
     return;
   };
 
   render() {
-    if (!this.state.qrFound) {
-      return (
-        <View style={styles.container}>
-          <RNCamera
-            ref={(ref) => {
-              this.camera = ref;
-            }}
-            style={styles.camera}
-            defaultTouchToFocus
-            flashMode={RNCamera.Constants.FlashMode.auto}
-            mirrorImage={false}
-            onBarCodeRead={this.onBarCodeRead.bind(this)}
-            onFocusChanged={() => {}}
-            onZoomChanged={() => {}}></RNCamera>
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <Text>{this.state.qrCodeValue}</Text>
-        </View>
-      );
-    }
+    return (
+      <View style={styles.container}>
+        <RNCamera
+          ref={(ref) => {
+            this.camera = ref;
+          }}
+          style={styles.camera}
+          defaultTouchToFocus
+          flashMode={RNCamera.Constants.FlashMode.auto}
+          mirrorImage={false}
+          onBarCodeRead={this.onBarCodeRead.bind(this)}
+          onFocusChanged={() => {}}
+          onZoomChanged={() => {}}></RNCamera>
+      </View>
+    );
   }
 }
 
