@@ -1,8 +1,8 @@
-import {View, Text, StyleSheet, Alert, Image, Switch} from 'react-native';
-import React, {Component} from 'react';
-import {Header} from '../components/Header';
-import {Input, Button} from 'react-native-elements';
-
+import { View, Text, StyleSheet, Alert, Image, Switch } from 'react-native';
+import React, { Component } from 'react';
+import { Header } from '../components/Header';
+import { Input, Button } from 'react-native-elements';
+import { getUserByNationalId } from '../services/UserService';
 class SearchScreen extends Component {
   constructor(props) {
     super(props);
@@ -22,30 +22,40 @@ class SearchScreen extends Component {
   }
 
   onChangeTextFunc = (text) => {
-    this.setState({nationalIDInput: text});
+    this.setState({ nationalIDInput: text });
+
   };
 
   onSearchClicked = () => {
     if (this.state.nationalIDInput === '') {
       Alert.alert('Error', 'Please enter an ID');
     } else {
-      this.setState({userFound: true});
+      getUserByNationalId(this.state.nationalIDInput)
+        .then(res => {
+          console.log(res);
+          this.setState({ userFound: true });
+          this.setState({ FetchedUser: res.data.data })
+        }).catch(err => {
+          console.log(err)
+          this.setState({ userFound: false });
+          Alert.alert('Error', err.response.data.data)
+        })
     }
   };
   toggleUserInfected = (value) => {
-    this.setState(Object.assign(this.state.FetchedUser, {infected: value}));
+    this.setState(Object.assign(this.state.FetchedUser, { infected: value }));
   };
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#f1f1f3'}}>
-        <View style={{flex: 1}}>
+      <View style={{ flex: 1, backgroundColor: '#f1f1f3' }}>
+        <View style={{ flex: 1 }}>
           <Header
             title="Case Entry"
             description="Add a new Corona-virus victim"
           />
         </View>
 
-        <View style={{flex: 3}}>
+        <View style={{ flex: 3 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -54,13 +64,13 @@ class SearchScreen extends Component {
             }}>
             <Input
               placeholder="Search by national ID"
-              inputStyle={{color: 'black', marginLeft: 10}}
+              inputStyle={{ color: 'black', marginLeft: 10 }}
               containerStyle={{
                 marginBottom: 20,
                 paddingHorizontal: -5,
                 width: '70%',
               }}
-              inputContainerStyle={{borderBottomColor: '#fdc82b'}}
+              inputContainerStyle={{ borderBottomColor: '#fdc82b' }}
               onChangeText={(text) => this.onChangeTextFunc(text)}
               keyboardType="number-pad"
             />
@@ -90,11 +100,11 @@ class SearchScreen extends Component {
                       source={require('../assets/TransactionPaid.png')}
                     />
                   ) : (
-                    <Image
-                      style={styles.indicator}
-                      source={require('../assets/TransactionRecieved.png')}
-                    />
-                  )}
+                      <Image
+                        style={styles.indicator}
+                        source={require('../assets/TransactionRecieved.png')}
+                      />
+                    )}
                   <View
                     style={{
                       marginLeft: 20,
@@ -109,7 +119,7 @@ class SearchScreen extends Component {
                         justifyContent: 'space-between',
                       }}>
                       <Text style={styles.transactionDateUnread}>
-                        {this.state.FetchedUser.nationalID}
+                        {this.state.FetchedUser.nationalId}
                       </Text>
                     </View>
                   </View>
@@ -121,7 +131,7 @@ class SearchScreen extends Component {
                       marginLeft: 25,
                     }}>
                     <Switch
-                      trackColor={{false: '#767577', true: '#767577'}}
+                      trackColor={{ false: '#767577', true: '#767577' }}
                       thumbColor={
                         this.state.FetchedUser.infected ? '#f4f3f4' : '#f4f3f4'
                       }
@@ -133,8 +143,8 @@ class SearchScreen extends Component {
                 </View>
               </View>
             ) : (
-              <Text style={styles.noResultsText}>{this.state.resultText}</Text>
-            )}
+                <Text style={styles.noResultsText}>{this.state.resultText}</Text>
+              )}
           </View>
         </View>
       </View>

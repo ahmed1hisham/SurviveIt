@@ -1,5 +1,6 @@
 // Sample empty service
 import axios from 'axios';
+
 export const userSignUp = (name, phoneNumber, password, national_id) => {
   return new Promise(async (resolve, reject) => {
     axios.post(`https://backend-surviveit.herokuapp.com/auth/signup`, {
@@ -21,6 +22,17 @@ export const userSignIn = (phoneNumber, password) => {
       .catch(err => reject(err))
   })
 }
+
+
+export const getUserByNationalId = (nationalId) => {
+  return new Promise(async (resolve, reject) => {
+    axios.get(`https://backend-surviveit.herokuapp.com/users/getuserbynationalid/${nationalId}`)
+      .then(res => resolve(res))
+      .catch(err => reject(err))
+  })
+}
+//https://backend-surviveit.herokuapp.com/users/getuserbyphonenumber/{phoneNumber}
+//https://backend-surviveit.herokuapp.com/users/getuserbynationalid/${nationalId}
 
 // return new Promise(async (resolve, reject) => {
 //   if (responseJSON != null) {

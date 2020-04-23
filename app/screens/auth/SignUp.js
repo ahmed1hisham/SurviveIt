@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { TextInput } from '../../components/Input';
 import { CommonButton } from '../../components/Button';
@@ -24,8 +24,13 @@ class SignUp extends React.Component {
       .then(async (res) => {
         console.log(res);
         await AsyncStorage.setItem('logged_in', 'true');
+        await AsyncStorage.setItem('user', JSON.stringify(res.data.data))
         this.setState({ loading: false })
         this.props.navigation.navigate('App')
+      }).catch(err => {
+        console.log('eerr', err.response)
+        this.setState({ loading: false })
+        Alert.alert('Error', err.response.data.data)
       })
   }
   render() {
@@ -59,6 +64,7 @@ class SignUp extends React.Component {
           />
           <TextInput
             label="Password"
+            password={true}
             iconName="lock"
             onChangeTextFunc={(text) => {
               this.setState({ password: text })

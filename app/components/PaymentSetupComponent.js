@@ -49,7 +49,9 @@ class PaymentSetupComponent extends Component {
             imageStyle={{
               overflow: 'hidden',
               resizeMode: 'cover',
-              borderTopRightRadius: 50,
+              borderTopRightRadius: 40,
+              borderBottomRightRadius: 40, 
+              // marginLeft: -70
             }}>
             <Text style={styles.name}>{this.state.currentUser.name}</Text>
             <View style={styles.inputFields}>
@@ -57,6 +59,7 @@ class PaymentSetupComponent extends Component {
                 <Input
                   label="Card Number"
                   keyboardType="number-pad"
+                  textContentType='creditCardNumber'
                   placeholder="XXXX XXXX XXXX XXXX"
                   inputStyle={{color: '#17283e'}}
                   containerStyle={{
@@ -66,7 +69,7 @@ class PaymentSetupComponent extends Component {
                   }}
                   inputContainerStyle={{borderBottomColor: '#fdc82b'}}
                   labelStyle={styles.labelStyle}
-                  onChangeText={(text) => onChangeCardNumber(text)}
+                  onChangeText={(text) => this.onChangeCardNumber(text)}
                 />
               </View>
               <View
@@ -87,7 +90,7 @@ class PaymentSetupComponent extends Component {
                   }}
                   inputContainerStyle={{borderBottomColor: '#fdc82b'}}
                   labelStyle={styles.labelStyle}
-                  onChangeText={(text) => onChangeCVV(text)}
+                  onChangeText={(text) => this.onChangeCVV(text)}
                 />
                 <Input
                   label="Expiry"
@@ -101,7 +104,7 @@ class PaymentSetupComponent extends Component {
                   }}
                   inputContainerStyle={{borderBottomColor: '#fdc82b'}}
                   labelStyle={styles.labelStyle}
-                  onChangeText={(text) => onChangeExpiry(text)}
+                  onChangeText={(text) => this.onChangeExpiry(text)}
                 />
               </View>
             </View>
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
 
   bankCard: {
     flex: 2,
-    paddingVertical: 75,
+    paddingVertical: 120,
   },
 
   doneButton: {
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 25,
     color: '#17283e',
+  
   },
   inputFields: {
     flex: 1,

@@ -21,10 +21,18 @@ class Login extends React.Component {
     this.setState({ loading: true })
     userSignIn(number, password).then(async res => {
       console.log(res)
+      await AsyncStorage.setItem('user', JSON.stringify(res.data.data))
+      // get user from AsyncStorage
+      // let user = await AsyncStorage.getItem('user')
+      // user = JSON.parse(user)
       await AsyncStorage.setItem('logged_in', 'true');
       this.setState({ loading: false })
       this.props.navigation.navigate('App')
-    }).catch(err => Alert.alert('Error', 'Invalid phone number or password'))
+    }).catch(err => {
+      console.log(err.response)
+      this.setState({ loading: false })
+      Alert.alert('Error', err.response.data.data)
+    })
   }
   render() {
     return (
@@ -42,6 +50,7 @@ class Login extends React.Component {
           <TextInput
             label="Password"
             iconName="lock"
+            password={true}
             onChangeTextFunc={(text) => {
               this.setState({ password: text })
             }}

@@ -78,7 +78,7 @@ const BottomNavigator = createBottomTabNavigator(
       },
     },
     Payment: {
-      screen: PaymentStack,
+      screen: SearchScreen,
       navigationOptions: {
         tabBarIcon: () => (
           <View
