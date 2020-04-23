@@ -1,29 +1,46 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, Alert} from 'react-native';
 import React, {Component} from 'react';
 import QRDisplayComponent from '../components/QRDipslayComponent';
-import QRScanScreen from './QRScanScreen';
 import PaymentSetupComponent from '../components/PaymentSetupComponent';
 import {Header} from '../components/Header';
+import {Input, Button} from 'react-native-elements';
+import QRScanScreen from './QRScanScreen';
 
 class PaymentScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      scanning: false,
       creditDone: false,
       payMoney: false,
       recMoney: false,
       recipientPhoneNumber: '',
+      paymentAmount: '',
     };
   }
-
+  // componentDidChange() {
+  //   if (this.props.navigation.state.params) {
+  //     this.setState({scanned: this.props.navigation.state.params.reScanned});
+  //     if (this.state.scanned) {
+  //       this.setState({scanned: false});
+  //       Alert.alert('Done');
+  //     }
+  //   }
+  // }
+  // componentDidChange() {
+  //   //console.log(this.props.params);
+  // }
   goToQRScan = () => {
-    this.setState({payMoney: true, recMoney: false});
-    // this.props.navigation.navigate('Camera');
+    this.props.navigation.navigate('Camera');
   };
 
-  goToQRDisplay = () => {
-    this.setState({recMoney: true, payMoney: false});
+  doneWithSetup = () => {
+    this.setState({creditDone: true});
+  };
+
+  onChangeAmountFunc = (text) => {
+    this.setState({paymentAmount: text});
   };
 
   recipientReturned = (phoneNumber) => {
@@ -31,15 +48,47 @@ class PaymentScreen extends Component {
     console.log(this.state.recipientPhoneNumber);
   };
 
+  scanCode = () => {
+    this.setState({scanning: true});
+  };
+
+  doneScanning = (phoneNumber) => {
+    this.setState({scanning: false});
+    Alert.alert(
+      'Confirmation',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            Alert.alert('Success', 'Money sent successfully');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   render() {
     if (this.state.creditDone === true) {
-      if (this.state.payMoney !== true && this.state.recMoney !== true) {
+      if (!this.state.scanning) {
         return (
           <View style={styles.container}>
-            <Header
-              title={'One more step!'}
-              description={'Complete your profile'}
-            />
+            {this.state.creditDone ? (
+              <Header
+                title={'Services'}
+                description={'Pay or receive money with a click'}
+              />
+            ) : (
+              <Header
+                title={'One more step!'}
+                description={'Complete your profile'}
+              />
+            )}
             {/* <TouchableOpacity style={{margin: 20}} onPress={this.goToQRDisplay}>
               <Text style={styles.buttons}>Recieve Money</Text>
             </TouchableOpacity> */}
@@ -50,28 +99,52 @@ class PaymentScreen extends Component {
               </View>
               <View style={styles.card}>
                 <Text style={styles.buttons}>Pay Money</Text>
+                <View style={styles.amountInput}>
+                  <Input
+                    label="Amount (SR)"
+                    inputStyle={{color: 'black', marginLeft: 10}}
+                    containerStyle={{marginBottom: 20, paddingHorizontal: -5}}
+                    inputContainerStyle={{borderBottomColor: '#fdc82b'}}
+                    labelStyle={styles.labelStyle}
+                    onChangeText={(text) => this.onChangeAmountFunc(text)}
+                    keyboardType="numeric"
+                    placeholder="0.00"
+                  />
+                </View>
+                <View style={styles.nextButton}>
+                  <Button
+                    type="solid"
+                    title="Next"
+                    titleStyle={styles.titleStyle}
+                    buttonStyle={styles.buttonStyle}
+                    onPress={() => this.scanCode()}
+                  />
+                </View>
               </View>
             </View>
           </View>
         );
-      }
-      if (this.state.payMoney === true) {
-        return <QRScanScreen recipient={this.recipientReturned} />;
-      } else if (this.state.recMoney === true) {
-        return <QRDisplayComponent />;
+      } else {
+        console.log('Henaaak');
+        return <QRScanScreen done={this.doneScanning} />;
       }
     } else {
-      return <PaymentSetupComponent />;
+      return (
+        <View style={styles.container}>
+          <PaymentSetupComponent done={this.doneWithSetup} />
+        </View>
+      );
     }
   }
 }
-
+const {width} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   container: {
     flex: 0,
     width: '100%',
     height: '100%',
     backgroundColor: '#f1f1f3',
+    paddingBottom: 15,
   },
   buttons: {textAlign: 'center', fontWeight: 'bold', fontSize: 32},
   card: {
@@ -80,6 +153,32 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     margin: 15,
     marginHorizontal: 20,
+  },
+  amountInput: {
+    flex: 1,
+    padding: 30,
+    marginBottom: 15,
+  },
+  nextButton: {
+    flex: 1,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  labelStyle: {
+    color: 'rgba(0,0,0,0.2)',
+    fontSize: 18,
+  },
+  titleStyle: {
+    color: 'white',
+    fontSize: 18,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+  },
+  buttonStyle: {
+    backgroundColor: '#fdc82b',
+    borderRadius: 30,
+    width: width * 0.8,
+    paddingVertical: 12,
   },
 });
 
