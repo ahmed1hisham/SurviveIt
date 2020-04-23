@@ -19,27 +19,11 @@ class NotificationsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <AuthHeader title={`Together, we can  ${'\n'} survive it`} />
-        </View>
+        {/* <View style={{ flex: 1 }}> */}
+        <AuthHeader title={`Together, we can  ${'\n'} survive it`} />
+        {/* </View> */}
         <View style={styles.inputDataView}>
-          <Text style={styles.titleStyle}>New Account</Text>
-          <TextInput
-            label="Full Name"
-            iconName="user"
-            onChangeTextFunc={(text) => {
-              console.log(text)
-              this.setState({ name: text })
-            }}
-          />
-          <TextInput
-            label="National ID"
-            iconName="user"
-            onChangeTextFunc={(text) => {
-              console.log(text)
-              this.setState({ nationalID: text })
-            }}
-          />
+          <Text style={styles.titleStyle}>Welcome {'\n'}Back</Text>
           <TextInput
             label="Mobile Number"
             iconName="mobile"
@@ -56,8 +40,7 @@ class NotificationsScreen extends React.Component {
               this.setState({ password: text })
             }}
           />
-
-
+          <Text style={styles.forgotPasswordStyle}>Forgot Password</Text>
         </View>
         {/* <TextInput
           label="ssssss"
@@ -65,8 +48,8 @@ class NotificationsScreen extends React.Component {
           onChangeTextFunc={(text) => console.log(text)}
         />
         <View style={{marginTop: 20}}/> */}
-        <View style={{ alignSelf: 'center' }}>
-          <CommonButton title="Sign Up" />
+        <View style={{ alignSelf: 'center', }}>
+          <CommonButton title="login" />
         </View>
       </View>
     )
@@ -81,6 +64,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 31,
     marginBottom: 40,
+  },
+  forgotPasswordStyle: {
+    color: '#fdc82b',
+    textDecorationLine: 'underline',
+    fontSize: 14,
+    marginTop: 5,
+    alignSelf:'flex-end'
+
   }
 })
 

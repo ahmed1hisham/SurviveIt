@@ -4,32 +4,9 @@ import { Header } from '../components/Header';
 import { TextInput } from '../components/Input';
 import { CommonButton } from '../components/Button';
 import * as Progress from 'react-native-progress';
-import HorizontalSlider from './test';
 const { width } = Dimensions.get('screen')
 
-// const data = [{ date: '14/02/20', time: '2:18', percentage: 0.4 }, { date: '15/02/20', time: '6:18', percentage: 0.9 }]
-const data = [{
-  id: 3,
-  category: "SCIENCE FICTION",
-  title: "Blade Runner Future 2049.",
-  image: { uri: "https://i.imgur.com/L68FtMA.jpg" }, rating: 4.0,
-}, {
-  id: 4,
-  category: "SUPERHERO ACTION",
-  title: "Captain America Civil War.",
-  image: { uri: "https://i.imgur.com/tAui2H7.jpg" }, rating: 3.5,
-}, {
-  id: 5,
-  category: "ROMANCE",
-  title: "Beauty and the Beast.",
-  image: { uri: "https://i.imgur.com/J5pgFyr.jpg" }, rating: 2.5,
-}, {
-  id: 6,
-  category: "DRAMA",
-  title: "Shawshank Redemption.",
-  image: { uri: "https://i.imgur.com/7YGXDbM.jpg" }, rating: 3.0,
-},
-]
+const data = [{ date: '14/02/20', time: '2:18', percentage: 0.4 }, { date: '15/02/20', time: '6:18', percentage: 0.9 }]
 class InteractionScreen extends React.Component {
   renderTransactionItem({ item }) {
     return (
@@ -56,7 +33,7 @@ class InteractionScreen extends React.Component {
       <View style={styles.container}>
         <Header title={'Cross-pathing'} description={'All about your interaction with patients'} />
         <View style={styles.dataConatiner}>
-          {/* <View style={styles.currentStatusView}>
+          <View style={styles.currentStatusView}>
             <Text style={styles.titleStyle}>Current Status</Text>
             <View style={styles.dataView}>
               <Text style={styles.smallTitleStyle}>interaction Severity</Text>
@@ -78,18 +55,14 @@ class InteractionScreen extends React.Component {
               <Text style={styles.smallTitleStyle}>interaction Timing</Text>
               <Text style={styles.titleStyle}>13:02</Text>
             </View>
-          </View> */}
+          </View>
           <View style={styles.InteractionHistoryView}>
             <Text style={styles.titleStyle}>Interaction history</Text>
-
-            {/* <FlatList
+            <FlatList
               data={data}
               keyExtractor={({ index }) => index}
               renderItem={this.renderTransactionItem.bind(this)}
-              horizontal
-            /> */}
-            <HorizontalSlider data={data}/>
-
+            />
           </View>
         </View>
       </View >

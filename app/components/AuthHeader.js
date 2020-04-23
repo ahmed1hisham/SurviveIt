@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 20,
     paddingHorizontal: 55,
-    height: 300
+    flex: 1
   },
   topText1: { color: 'white', fontSize: 36, fontWeight: 'bold' },
   topText2: { color: 'white', fontSize: 14, opacity: 0.7, marginTop: 5 },
