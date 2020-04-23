@@ -16,7 +16,7 @@ class QRScanScreen extends Component {
     this.props.recipient(phoneNumber);
   };
 
-  onBarCodeRead(scanResult) {
+  onBarCodeRead = (scanResult) => {
     // Vibration.vibrate(300);
     // Vibration.cancel();
     this.setState({qrFound: true});
@@ -28,9 +28,12 @@ class QRScanScreen extends Component {
         });
       }
     }
-    this.sendDataToParent(scanResult.data);
+    this.props.navigation.navigate('Payment', {
+      phoneNumber: scanResult.data,
+      justScanned: true,
+    });
     return;
-  }
+  };
 
   render() {
     if (!this.state.qrFound) {

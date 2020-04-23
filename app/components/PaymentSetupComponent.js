@@ -9,15 +9,31 @@ class PaymentSetupComponent extends Component {
 
     this.state = {
       currentUser: {
-        name: 'Salma Medhat',
+        name: 'Ahmed Hisham',
         phoneNumber: '01111225223',
         cardNumber: '',
         cvv: '',
         expiryDate: '',
         otherAttributes: '...',
       },
+      cardNumberInput: '',
+      cardExpiry: '',
+      cardCVV: '',
     };
   }
+
+  onChangeCardNumber = (text) => {
+    this.setState({cardNumberInput: text});
+  };
+
+  onChangeCVV = (text) => {
+    this.setState({cardCVV: text});
+  };
+
+  onChangeExpiry = (text) => {
+    this.setState({cardExpiry: text});
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -50,7 +66,7 @@ class PaymentSetupComponent extends Component {
                   }}
                   inputContainerStyle={{borderBottomColor: '#fdc82b'}}
                   labelStyle={styles.labelStyle}
-                  onChangeText={(text) => onChangeTextFunc(text)}
+                  onChangeText={(text) => onChangeCardNumber(text)}
                 />
               </View>
               <View
@@ -71,7 +87,7 @@ class PaymentSetupComponent extends Component {
                   }}
                   inputContainerStyle={{borderBottomColor: '#fdc82b'}}
                   labelStyle={styles.labelStyle}
-                  onChangeText={(text) => onChangeTextFunc(text)}
+                  onChangeText={(text) => onChangeCVV(text)}
                 />
                 <Input
                   label="Expiry"
@@ -85,7 +101,7 @@ class PaymentSetupComponent extends Component {
                   }}
                   inputContainerStyle={{borderBottomColor: '#fdc82b'}}
                   labelStyle={styles.labelStyle}
-                  onChangeText={(text) => onChangeTextFunc(text)}
+                  onChangeText={(text) => onChangeExpiry(text)}
                 />
               </View>
             </View>

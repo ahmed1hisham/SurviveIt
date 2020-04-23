@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   transactionTitleRead: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   transactionTitleUnread: {

@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, Alert} from 'react-native';
 import React, {Component} from 'react';
 import QRDisplayComponent from '../components/QRDipslayComponent';
 import PaymentSetupComponent from '../components/PaymentSetupComponent';
@@ -16,6 +16,12 @@ class PaymentScreen extends Component {
       recipientPhoneNumber: '',
       paymentAmount: '',
     };
+  }
+  componentDidMount() {
+    if (this.props.navigation === true) {
+      console.log('HEEEEYY');
+      this.props.navigation.navigate('Interaction');
+    }
   }
 
   goToQRScan = () => {
