@@ -67,6 +67,9 @@ const BottomNavigator = createBottomTabNavigator(
           <View
             style={{
               position: 'absolute',
+              borderWidth: 36,
+              borderRadius: 30,
+              borderColor: 'rgba(253,200,43,0.3)',
               bottom: 30, // space from bottombar
               height: 60,
               width: 60,

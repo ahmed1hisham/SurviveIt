@@ -129,7 +129,11 @@ class PaymentScreen extends Component {
         return <QRScanScreen done={this.doneScanning} />;
       }
     } else {
-      return <PaymentSetupComponent done={this.doneWithSetup} />;
+      return (
+        <View style={styles.container}>
+          <PaymentSetupComponent done={this.doneWithSetup} />
+        </View>
+      );
     }
   }
 }
@@ -140,6 +144,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#f1f1f3',
+    paddingBottom: 15,
   },
   buttons: {textAlign: 'center', fontWeight: 'bold', fontSize: 32},
   card: {
@@ -152,10 +157,12 @@ const styles = StyleSheet.create({
   amountInput: {
     flex: 1,
     padding: 30,
+    marginBottom: 15,
   },
   nextButton: {
     flex: 1,
     alignItems: 'center',
+    marginBottom: 15,
   },
   labelStyle: {
     color: 'rgba(0,0,0,0.2)',
