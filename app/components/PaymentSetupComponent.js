@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {Header} from './Header';
 import {CommonButton} from './Button';
 import {Input} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 class PaymentSetupComponent extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +23,11 @@ class PaymentSetupComponent extends Component {
     };
   }
 
+  async componentDidMount() {
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user);
+    this.setState({currentUser: user});
+  }
   onChangeCardNumber = (text) => {
     this.setState({cardNumberInput: text});
   };
@@ -50,7 +56,7 @@ class PaymentSetupComponent extends Component {
               overflow: 'hidden',
               resizeMode: 'cover',
               borderTopRightRadius: 40,
-              borderBottomRightRadius: 40, 
+              borderBottomRightRadius: 40,
               // marginLeft: -70
             }}>
             <Text style={styles.name}>{this.state.currentUser.name}</Text>
@@ -59,7 +65,7 @@ class PaymentSetupComponent extends Component {
                 <Input
                   label="Card Number"
                   keyboardType="number-pad"
-                  textContentType='creditCardNumber'
+                  textContentType="creditCardNumber"
                   placeholder="XXXX XXXX XXXX XXXX"
                   inputStyle={{color: '#17283e'}}
                   containerStyle={{
@@ -111,7 +117,16 @@ class PaymentSetupComponent extends Component {
           </ImageBackground>
         </View>
         <View style={styles.doneButton}>
-          <CommonButton title="Done" onPressFunc={this.props.done} />
+          <CommonButton
+            title="Done"
+            onPressFunc={() =>
+              this.props.done(
+                this.state.cardNumberInput,
+                this.state.cardCVV,
+                this.state.cardExpiry,
+              )
+            }
+          />
         </View>
       </View>
     );
@@ -153,7 +168,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 25,
     color: '#17283e',
-  
   },
   inputFields: {
     flex: 1,
