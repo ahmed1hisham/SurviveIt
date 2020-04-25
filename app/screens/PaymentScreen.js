@@ -5,12 +5,16 @@ import PaymentSetupComponent from '../components/PaymentSetupComponent';
 import {Header} from '../components/Header';
 import {Input, Button} from 'react-native-elements';
 import QRScanScreen from './QRScanScreen';
+import AsyncStorage from '@react-native-community/async-storage';
+import {paymentSetup} from '../services/UserService';
+import {getUserByPhoneNumber} from '../services/UserService';
 
 class PaymentScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      currentUser: {},
       scanning: false,
       creditDone: false,
       payMoney: false,
@@ -19,24 +23,45 @@ class PaymentScreen extends Component {
       paymentAmount: '',
     };
   }
-  // componentDidChange() {
-  //   if (this.props.navigation.state.params) {
-  //     this.setState({scanned: this.props.navigation.state.params.reScanned});
-  //     if (this.state.scanned) {
-  //       this.setState({scanned: false});
-  //       Alert.alert('Done');
-  //     }
-  //   }
-  // }
-  // componentDidChange() {
-  //   //console.log(this.props.params);
-  // }
+  componentDidMount() {
+    this.updateCurrentUser();
+  }
+
+  async updateCurrentUser() {
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user);
+    getUserByPhoneNumber(user.phoneNumber)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          currentUser: res.data.data,
+          creditDone: res.data.data.paymentSetup,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({userFound: false});
+        Alert.alert('Error', err.response.data.data);
+      });
+  }
+
   goToQRScan = () => {
     this.props.navigation.navigate('Camera');
   };
 
-  doneWithSetup = () => {
-    this.setState({creditDone: true});
+  doneWithSetup = (cardNumber, cvv, expiry) => {
+    paymentSetup(this.state.currentUser.phoneNumber, cardNumber, cvv, expiry)
+      .then((res) => {
+        console.log(res);
+        Alert.alert('Success', 'Payment setup successful');
+        this.updateCurrentUser();
+        this.setState({creditDone: true});
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({creditDone: false});
+        Alert.alert('Error', err.response.data.data);
+      });
   };
 
   onChangeAmountFunc = (text) => {
@@ -49,14 +74,18 @@ class PaymentScreen extends Component {
   };
 
   scanCode = () => {
-    this.setState({scanning: true});
+    if (this.state.paymentAmount === '') {
+      Alert.alert('Error', 'Please enter payment amount');
+    } else {
+      this.setState({scanning: true});
+    }
   };
 
   doneScanning = (phoneNumber) => {
     this.setState({scanning: false});
     Alert.alert(
       'Confirmation',
-      'Are you sure?',
+      'Send ' + this.state.paymentAmount + ' SR ?',
       [
         {
           text: 'Cancel',
@@ -125,13 +154,14 @@ class PaymentScreen extends Component {
           </View>
         );
       } else {
-        console.log('Henaaak');
         return <QRScanScreen done={this.doneScanning} />;
       }
     } else {
       return (
         <View style={styles.container}>
-          <PaymentSetupComponent done={this.doneWithSetup} />
+          <PaymentSetupComponent
+            done={(x, y, z) => this.doneWithSetup(x, y, z)}
+          />
         </View>
       );
     }

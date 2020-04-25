@@ -1,6 +1,10 @@
 import React from 'react';
-import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {
+  createStackNavigator,
+  createAppContainer,
+  createSwitchNavigator,
+} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import PaymentScreen from '../screens/PaymentScreen';
 import InteractionScreen from '../screens/InteractionScreen';
 import NotifsScreen from '../screens/NotifsScreen';
@@ -15,16 +19,16 @@ const AuthStack = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
-      header: null
-    }
+      header: null,
+    },
   },
   SignUp: {
     screen: SignUp,
     navigationOptions: {
-      header: null
-    }
+      header: null,
+    },
   },
-})
+});
 const PaymentStack = createStackNavigator({
   Payment: {
     screen: PaymentScreen,
@@ -153,21 +157,24 @@ const BottomNavigator = createBottomTabNavigator(
   },
 );
 
-const AppController = createSwitchNavigator({
-  AuthLoading: {
-    screen: AuthLoading,
-    navigationOptions: {
-      screen: AuthLoading
-    }
+const AppController = createSwitchNavigator(
+  {
+    AuthLoading: {
+      screen: AuthLoading,
+      navigationOptions: {
+        screen: AuthLoading,
+      },
+    },
+    Auth: {
+      screen: AuthStack,
+    },
+    App: {
+      screen: BottomNavigator,
+    },
   },
-  Auth: {
-    screen: AuthStack
+  {
+    initialRouteName: 'AuthLoading',
   },
-  App: {
-    screen: BottomNavigator
-  }
-}, {
-  initialRouteName: 'AuthLoading'
-})
+);
 
 export default AppNav = createAppContainer(AppController);

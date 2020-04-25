@@ -1,22 +1,27 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class QRDisplayComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentUser: {
-        name: 'Ahmed Hisham',
-        phoneNumber: '01111225223',
-        otherAttributes: '...',
-      },
+      currentUser: {},
     };
+  }
+  async componentDidMount() {
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user);
+    this.setState({currentUser: user});
   }
   render() {
     return (
       <View style={styles.container}>
+        {/* {this.state.currentUser !== {} ? (
+
+        ) : null} */}
         <QRCode
           value={this.state.currentUser.phoneNumber}
           backgroundColor="transparent"
