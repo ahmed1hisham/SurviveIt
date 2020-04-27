@@ -13,7 +13,7 @@ import SignUp from '../screens/auth/SignUp';
 import Login from '../screens/auth/Login';
 import AuthLoading from '../screens/auth/AuthLoading';
 import SearchScreen from '../screens/SearchScreen';
-import { View, Image } from 'react-native';
+import {View, Image} from 'react-native';
 
 const AuthStack = createStackNavigator({
   Login: {
@@ -49,7 +49,7 @@ const BottomNavigator = createBottomTabNavigator(
     Interaction: {
       screen: InteractionScreen,
       navigationOptions: {
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <View
             style={{
               bottom: 0, // space from bottombar
@@ -68,15 +68,15 @@ const BottomNavigator = createBottomTabNavigator(
                 }}
               />
             ) : (
-                <Image
-                  source={require('../assets/CoronaGrey.png')}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    alignContent: 'center',
-                  }}
-                />
-              )}
+              <Image
+                source={require('../assets/CoronaGrey.png')}
+                style={{
+                  width: 40,
+                  height: 40,
+                  alignContent: 'center',
+                }}
+              />
+            )}
           </View>
         ),
       },
@@ -112,7 +112,7 @@ const BottomNavigator = createBottomTabNavigator(
     Notifications: {
       screen: NotifsScreen,
       navigationOptions: {
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <View
             style={{
               bottom: 0, // space from bottombar
@@ -131,15 +131,15 @@ const BottomNavigator = createBottomTabNavigator(
                 }}
               />
             ) : (
-                <Image
-                  source={require('../assets/NotGrey.png')}
-                  style={{
-                    width: 30,
-                    height: 35,
-                    alignContent: 'center',
-                  }}
-                />
-              )}
+              <Image
+                source={require('../assets/NotGrey.png')}
+                style={{
+                  width: 30,
+                  height: 35,
+                  alignContent: 'center',
+                }}
+              />
+            )}
           </View>
         ),
       },
